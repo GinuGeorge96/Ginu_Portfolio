@@ -16,7 +16,7 @@ const CATS = [
   },
   {
     label: 'AI / Data Systems',
-    color: '#a78bfa',
+    color: '#f97316',
     skills: ['OpenAI API', 'RAG Systems', 'Semantic Search', 'NLP', 'LLMs'],
     orbitF: 0.305, speed:  0.00024,
   },
@@ -188,8 +188,8 @@ export default function SkillsGalaxy() {
 
       // Solid core
       ctx.beginPath(); ctx.arc(cx, cy, coreR, 0, Math.PI * 2)
-      ctx.fillStyle   = '#e9d5ff'
-      ctx.shadowColor = '#a78bfa'
+      ctx.fillStyle   = '#bfdbfe'
+      ctx.shadowColor = '#60a5fa'
       ctx.shadowBlur  = 22
       ctx.fill(); ctx.shadowBlur = 0
 

@@ -38,8 +38,8 @@ export default function Navbar() {
             <path d="M24 16h-6v4h3.5A6 6 0 1 1 16 10a6 6 0 0 1 4.24 1.76" stroke="url(#gGrad)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             <defs>
               <linearGradient id="gGrad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#a78bfa"/>
-                <stop offset="1" stopColor="#60a5fa"/>
+                <stop stopColor="#60a5fa"/>
+                <stop offset="1" stopColor="#f97316"/>
               </linearGradient>
             </defs>
           </svg>
