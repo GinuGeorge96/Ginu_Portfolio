@@ -1,30 +1,40 @@
 import { useEffect, useState } from 'react'
 
-const TYPED_WORD = 'Developer'
+const ROLES = [
+  { prefix: 'Full-Stack',  word: 'Developer'   },
+  { prefix: 'AI',          word: 'Enthusiast'  },
+  { prefix: 'Tech',        word: 'Explorer'    },
+  { prefix: 'Problem',     word: 'Solver'      },
+]
 
 export default function Hero() {
+  const [roleIdx, setRoleIdx] = useState(0)
   const [displayed, setDisplayed] = useState('')
 
   useEffect(() => {
-    let i = 0
+    let idx     = 0
+    let charIdx = 0
     let forward = true
     let timeout
 
     const tick = () => {
+      const word = ROLES[idx].word
       if (forward) {
-        i++
-        setDisplayed(TYPED_WORD.slice(0, i))
-        if (i === TYPED_WORD.length) {
+        charIdx++
+        setDisplayed(word.slice(0, charIdx))
+        if (charIdx === word.length) {
           forward = false
-          timeout = setTimeout(tick, 1800) // pause before erasing
+          timeout = setTimeout(tick, 1800)
           return
         }
       } else {
-        i--
-        setDisplayed(TYPED_WORD.slice(0, i))
-        if (i === 0) {
+        charIdx--
+        setDisplayed(word.slice(0, charIdx))
+        if (charIdx === 0) {
+          idx = (idx + 1) % ROLES.length
+          setRoleIdx(idx)
           forward = true
-          timeout = setTimeout(tick, 400) // pause before retyping
+          timeout = setTimeout(tick, 400)
           return
         }
       }
@@ -50,7 +60,7 @@ export default function Hero() {
             </h1>
 
             <div className="hero-role">
-              Full-Stack{' '}
+              {ROLES[roleIdx].prefix}{' '}
               <span className="typed-word">
                 {displayed}
                 <span className="typed-cursor">|</span>
@@ -58,12 +68,16 @@ export default function Hero() {
             </div>
 
             <p className="hero-tagline">
-              Building AI systems that transform complex data into actionable insights.
+              Full-stack developer specializing in AI-powered, data-driven systems for scalable, real-world solutions.
+            </p>
+
+            <p className="hero-tagline-sub">
+              Building thoughtful software, one commit at a time.
             </p>
 
             <div className="d-flex flex-wrap gap-3">
               <a href="#contact"  className="btn-pri">Get In Touch</a>
-              <a href="#projects" className="btn-out">View Projects</a>
+              <a href="/cv.pdf" download className="btn-out">Download CV</a>
             </div>
 
             <div className="social-row">

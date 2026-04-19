@@ -1,41 +1,42 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import SkillsGrid from './SkillsGrid'
 
 /* ── Skill categories ── */
 const CATS = [
   {
     label: 'Frontend',
     color: '#60a5fa',
-    skills: ['React', 'Next.js', 'TypeScript', 'JavaScript', 'Tailwind CSS', 'Sass'],
+    skills: ['React', 'Next.js', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS', 'Svelte', 'Redux'],
     orbitF: 0.15, speed:  0.00038,
   },
   {
     label: 'Backend & APIs',
     color: '#34d399',
-    skills: ['Node.js', 'FastAPI', 'C#', 'REST APIs', 'API Design'],
+    skills: ['Python', 'FastAPI', 'Node.js', 'C#', 'REST APIs', 'OpenAPI'],
     orbitF: 0.225, speed: -0.00030,
   },
   {
     label: 'AI / Data Systems',
     color: '#f97316',
-    skills: ['OpenAI API', 'RAG Systems', 'Semantic Search', 'NLP', 'LLMs'],
+    skills: ['OpenAI API', 'RAG Systems', 'Semantic Search', 'Vector DB', 'Embeddings', 'LLMs'],
     orbitF: 0.305, speed:  0.00024,
   },
   {
     label: 'Databases',
     color: '#fb923c',
-    skills: ['PostgreSQL', 'MySQL', 'MongoDB'],
+    skills: ['PostgreSQL', 'MongoDB', 'SQL', 'Pandas', 'NumPy'],
     orbitF: 0.375, speed: -0.00020,
   },
   {
     label: 'Cloud & DevOps',
     color: '#22d3ee',
-    skills: ['AWS', 'Docker', 'GitHub Actions', 'Vercel', 'CI/CD'],
+    skills: ['AWS', 'Azure', 'Docker', 'GitHub Actions', 'CI/CD', 'Git'],
     orbitF: 0.445, speed:  0.00016,
   },
   {
     label: 'Tools & Practices',
     color: '#f472b6',
-    skills: ['Agile', 'JIRA', 'System Design', 'TDD', 'Git'],
+    skills: ['Agile', 'JIRA', 'System Design', 'Figma', 'Postman', 'TDD'],
     orbitF: 0.505, speed: -0.00012,
   },
 ]
@@ -199,8 +200,8 @@ export default function SkillsGalaxy() {
       ctx.fillStyle     = '#1e1040'
       ctx.textAlign     = 'center'
       ctx.textBaseline  = 'middle'
-      ctx.fillText('AI',  cx, cy - cfs * 0.5)
-      ctx.fillText('DEV', cx, cy + cfs * 0.65)
+      ctx.fillText('CODE',  cx, cy - cfs * 0.5)
+      ctx.fillText('CRAFT', cx, cy + cfs * 0.65)
       ctx.textBaseline  = 'alphabetic'
 
       animId = requestAnimationFrame(drawFrame)
@@ -213,6 +214,8 @@ export default function SkillsGalaxy() {
     }
   }, [])
 
+  const [view, setView] = useState('galaxy')
+
   return (
     <section id="skills">
       <div className="container">
@@ -220,21 +223,40 @@ export default function SkillsGalaxy() {
           <h2 className="section-title">Skills <span>Galaxy</span></h2>
           <p className="section-sub">Technologies orbiting around my core expertise</p>
         </div>
-      </div>
 
-      <div ref={wrapRef} className="galaxy-wrap" data-aos="zoom-in" data-aos-duration="1000">
-        <canvas ref={canvasRef} />
-      </div>
-
-      <div className="container">
-        <div className="legend" data-aos="fade-up" data-aos-delay="200">
-          {CATS.map(c => (
-            <div key={c.label} className="legend-item">
-              <div className="legend-dot" style={{ background: c.color, boxShadow: `0 0 7px ${c.color}` }} />
-              <span>{c.label}</span>
-            </div>
-          ))}
+        {/* View toggle */}
+        <div className="sg-view-toggle">
+          <button className={`sg-view-btn${view === 'galaxy' ? ' active' : ''}`} onClick={() => setView('galaxy')}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg>
+            Galaxy
+          </button>
+          <button className={`sg-view-btn${view === 'grid' ? ' active' : ''}`} onClick={() => setView('grid')}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Grid
+          </button>
         </div>
+      </div>
+
+      {/* Galaxy — always mounted, hidden when grid active */}
+      <div style={{ display: view === 'galaxy' ? 'block' : 'none' }}>
+        <div ref={wrapRef} className="galaxy-wrap">
+          <canvas ref={canvasRef} />
+        </div>
+        <div className="container">
+          <div className="legend">
+            {CATS.map(c => (
+              <div key={c.label} className="legend-item">
+                <div className="legend-dot" style={{ background: c.color, boxShadow: `0 0 7px ${c.color}` }} />
+                <span>{c.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Grid — always mounted, hidden when galaxy active */}
+      <div style={{ display: view === 'grid' ? 'block' : 'none' }} className="container">
+        <SkillsGrid />
       </div>
     </section>
   )
