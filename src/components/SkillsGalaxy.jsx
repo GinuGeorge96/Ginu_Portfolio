@@ -7,13 +7,13 @@ const CATS = [
     label: 'Languages',
     color: '#eab308',
     skills: ['Python', 'JavaScript', 'TypeScript', 'C#'],
-    orbitF: 0.10, speed: -0.00042,
+    orbitF: 0.135, speed: -0.00042,
   },
   {
     label: 'Frontend',
     color: '#60a5fa',
     skills: ['React', 'Next.js', 'Svelte', 'HTML', 'CSS', 'Tailwind CSS', 'Redux'],
-    orbitF: 0.15, speed:  0.00038,
+    orbitF: 0.175, speed:  0.00038,
   },
   {
     label: 'Backend & APIs',
