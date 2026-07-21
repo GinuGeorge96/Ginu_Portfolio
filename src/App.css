@@ -33,7 +33,7 @@ body  {
 /* ============================================================
    SHARED SECTION
    ============================================================ */
-section { padding: 100px 0; position: relative; }
+section { padding: 60px 0; position: relative; }
 
 .section-title {
   font-size: clamp(2rem, 4vw, 2.8rem);
@@ -46,7 +46,7 @@ section { padding: 100px 0; position: relative; }
 .section-sub {
   color: var(--text-muted);
   font-size: 1.05rem;
-  margin-bottom: 3.5rem;
+  margin-bottom: 2.5rem;
 }
 
 /* ============================================================
@@ -428,7 +428,6 @@ section { padding: 100px 0; position: relative; }
    ============================================================ */
 #experience {
   background: rgba(255,255,255,0.015);
-  padding-bottom: 45px;
 }
 
 .timeline-wrap { position: relative; }
@@ -456,22 +455,22 @@ section { padding: 100px 0; position: relative; }
 }
 .tl-flow-dot {
   position: absolute;
-  left: 9px;
+  left: 13px;
   top: 10px;
-  width: 20px;
-  height: 20px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary-light), var(--secondary));
-  box-shadow: 0 0 18px rgba(96,165,250,0.75), 0 0 32px rgba(249,115,22,0.3);
+  box-shadow: 0 0 12px rgba(96,165,250,0.75), 0 0 20px rgba(249,115,22,0.25);
   pointer-events: none;
   z-index: 3;
   opacity: 0;
-  transform: scale(0.85);
+  transform: scale(0.9);
   transition: top 0.1s linear, opacity 0.2s ease, transform 0.2s ease;
 }
 .tl-flow-dot.is-flowing {
   opacity: 1;
-  transform: scale(1.08);
+  transform: scale(1);
 }
 
 .tl-item { position: relative; padding-left: 52px; margin-bottom: 2.5rem; }
@@ -537,8 +536,6 @@ section { padding: 100px 0; position: relative; }
 /* ============================================================
    PROJECTS
    ============================================================ */
-#projects { padding-top: 45px; }
-
 .proj-card {
   background: rgba(255,255,255,0.03);
   border: 1px solid var(--border);
@@ -619,11 +616,6 @@ section { padding: 100px 0; position: relative; }
 /* ============================================================
    CONTACT
    ============================================================ */
-#contact {
-  padding-top: 55px;
-  padding-bottom: 70px;
-}
-
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
@@ -830,8 +822,6 @@ a.contact-info-value:hover { color: var(--primary-light); }
 /* ============================================================
    HOBBIES
    ============================================================ */
-#hobbies { padding-bottom: 40px; }
-
 .hobbies-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -1040,7 +1030,6 @@ a.contact-info-value:hover { color: var(--primary-light); }
 }
 .sg-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 1rem;
 }
 .sg-carousel {
@@ -1264,11 +1253,6 @@ footer {
   .avatar-ring { width: 210px; height: 210px; }
 }
 @media (max-width: 575px) {
-  section { padding: 70px 0; }
-  #experience { padding-bottom: 35px; }
-  #projects   { padding-top: 35px; }
-  #hobbies    { padding-bottom: 35px; }
-  #contact    { padding-top: 45px; padding-bottom: 55px; }
-  footer      { padding-top: 1rem; }
+  section { padding: 45px 0; }
   .avatar-ring { width: 170px; height: 170px; }
 }

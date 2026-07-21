@@ -4,6 +4,12 @@ import SkillsGrid from './SkillsGrid'
 /* ── Skill categories ── */
 const CATS = [
   {
+    label: 'Languages',
+    color: '#eab308',
+    skills: ['Python', 'JavaScript', 'TypeScript'],
+    orbitF: 0.10, speed: -0.00042,
+  },
+  {
     label: 'Frontend',
     color: '#60a5fa',
     skills: ['React', 'Next.js', 'Svelte', 'HTML', 'CSS', 'Tailwind CSS', 'Redux'],
@@ -12,13 +18,13 @@ const CATS = [
   {
     label: 'Backend & APIs',
     color: '#34d399',
-    skills: ['FastAPI', 'Node.js', 'C# / .NET', 'REST APIs', 'OpenAPI', 'Asynchronous Programming', 'Authentication & Authorization'],
+    skills: ['FastAPI', 'Node.js', 'C# / .NET', 'REST APIs', 'OpenAPI'],
     orbitF: 0.225, speed: -0.00030,
   },
   {
     label: 'AI & Data',
     color: '#f97316',
-    skills: ['OpenAI API', 'LLMs', 'RAG Systems', 'Semantic Search', 'Embeddings', 'Pandas', 'NumPy'],
+    skills: ['OpenAI API', 'LLMs', 'RAG Systems', 'Embeddings', 'Pandas', 'NumPy'],
     orbitF: 0.305, speed:  0.00024,
   },
   {
@@ -30,7 +36,7 @@ const CATS = [
   {
     label: 'Cloud & DevOps',
     color: '#22d3ee',
-    skills: ['AWS', 'GCP', 'Docker', 'GitHub Actions (CI/CD)', 'Vercel', 'Git', 'Linux'],
+    skills: ['AWS', 'GCP', 'Docker', 'CI/CD', 'Vercel', 'Git', 'Linux'],
     orbitF: 0.445, speed:  0.00016,
   },
   {
@@ -42,7 +48,7 @@ const CATS = [
   {
     label: 'Testing & Quality',
     color: '#c084fc',
-    skills: ['Test-Driven Development (TDD)', 'Unit Testing', 'Integration Testing', 'API Testing'],
+    skills: ['TDD', 'Unit Testing', 'Integration Testing', 'API Testing'],
     orbitF: 0.565, speed:  0.00010,
   },
 ]
@@ -220,7 +226,7 @@ export default function SkillsGalaxy() {
     }
   }, [])
 
-  const [view, setView] = useState('grid')
+  const [view, setView] = useState('galaxy')
 
   return (
     <section id="skills">
@@ -232,13 +238,13 @@ export default function SkillsGalaxy() {
 
         {/* View toggle */}
         <div className="sg-view-toggle">
-          <button className={`sg-view-btn${view === 'grid' ? ' active' : ''}`} onClick={() => setView('grid')}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-            Grid
-          </button>
           <button className={`sg-view-btn${view === 'galaxy' ? ' active' : ''}`} onClick={() => setView('galaxy')}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="22"/><line x1="2" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="22" y2="12"/></svg>
             Galaxy
+          </button>
+          <button className={`sg-view-btn${view === 'grid' ? ' active' : ''}`} onClick={() => setView('grid')}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Grid
           </button>
         </div>
       </div>

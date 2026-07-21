@@ -50,7 +50,7 @@ const SKILLS = [
   { name: 'AWS',                       icon: FaAws,            color: '#FF9900', category: 'Cloud & DevOps', pct: 75 },
   { name: 'GCP',                       icon: SiGooglecloud,    color: '#4285F4', category: 'Cloud & DevOps', pct: 70 },
   { name: 'Docker',                    icon: SiDocker,         color: '#2496ED', category: 'Cloud & DevOps', pct: 80 },
-  { name: 'GitHub Actions (CI/CD)',    icon: SiGithubactions,  color: '#2088FF', category: 'Cloud & DevOps', pct: 80 },
+  { name: 'CI/CD',                     icon: SiGithubactions,  color: '#2088FF', category: 'Cloud & DevOps', pct: 80 },
   { name: 'Vercel',                    icon: SiVercel,         color: '#ffffff', category: 'Cloud & DevOps', pct: 75 },
   { name: 'Git',                       icon: SiGit,            color: '#F05032', category: 'Cloud & DevOps', pct: 90 },
   { name: 'Linux',                     icon: FaLinux,          color: '#FCC624', category: 'Cloud & DevOps', pct: 80 },
@@ -59,7 +59,7 @@ const SKILLS = [
   { name: 'Postman',         icon: SiPostman,          color: '#FF6C37', category: 'Tools',                 pct: 80 },
   { name: 'JIRA',            icon: SiJira,             color: '#0052CC', category: 'Tools',                 pct: 80 },
   // Testing & Quality
-  { name: 'Test-Driven Development (TDD)', icon: FaVial,         color: '#f472b6', category: 'Testing & Quality', pct: 75 },
+  { name: 'TDD',                           icon: FaVial,         color: '#f472b6', category: 'Testing & Quality', pct: 75 },
   { name: 'Unit Testing',                  icon: FaCheckCircle,  color: '#34d399', category: 'Testing & Quality', pct: 85 },
   { name: 'Integration Testing',           icon: FaLink,         color: '#60a5fa', category: 'Testing & Quality', pct: 80 },
   { name: 'API Testing',                   icon: SiPostman,      color: '#FF6C37', category: 'Testing & Quality', pct: 80 },
@@ -68,6 +68,7 @@ const SKILLS = [
 const TABS = ['All', 'Languages', 'Frontend', 'Backend & APIs', 'AI & Data', 'Databases', 'Cloud & DevOps', 'Tools', 'Testing & Quality']
 
 const ROWS = 4
+const MAX_COLS = 5
 const CARD_MIN = 160
 const GRID_GAP = 16
 
@@ -95,6 +96,7 @@ export default function SkillsGrid() {
   const perPage = cols * ROWS
   const pageCount = Math.ceil(filtered.length / perPage)
   const useCarousel = active === 'All' && pageCount > 1
+  const gridStyle = { gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }
 
   useEffect(() => {
     setPage(0)
@@ -110,7 +112,10 @@ export default function SkillsGrid() {
 
     const measure = () => {
       const width = el.clientWidth
-      const nextCols = Math.max(1, Math.floor((width + GRID_GAP) / (CARD_MIN + GRID_GAP)))
+      const nextCols = Math.min(
+        MAX_COLS,
+        Math.max(1, Math.floor((width + GRID_GAP) / (CARD_MIN + GRID_GAP)))
+      )
       setCols(nextCols)
     }
 
@@ -118,7 +123,7 @@ export default function SkillsGrid() {
     const ro = new ResizeObserver(measure)
     ro.observe(el)
     return () => ro.disconnect()
-  }, [useCarousel])
+  }, [active, useCarousel])
 
   const pages = Array.from({ length: pageCount }, (_, i) =>
     filtered.slice(i * perPage, (i + 1) * perPage)
@@ -161,7 +166,7 @@ export default function SkillsGrid() {
               style={{ transform: `translateX(-${page * 100}%)` }}
             >
               {pages.map((chunk, i) => (
-                <div key={i} className="sg-cards sg-cards-page">
+                <div key={i} className="sg-cards sg-cards-page" style={gridStyle}>
                   {chunk.map(s => (
                     <SkillCard key={s.name} skill={s} showCategory={showCategory} />
                   ))}
@@ -186,7 +191,7 @@ export default function SkillsGrid() {
           </div>
         </div>
       ) : (
-        <div className="sg-cards" ref={viewportRef}>
+        <div className="sg-cards" ref={viewportRef} style={gridStyle}>
           {filtered.map(s => (
             <SkillCard key={s.name} skill={s} showCategory={showCategory} />
           ))}

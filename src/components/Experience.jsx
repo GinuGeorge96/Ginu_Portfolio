@@ -69,6 +69,8 @@ const JOBS = [
 ]
 
 const DOT_OFFSET = 10
+const FLOW_DOT_SIZE = 12
+const FLOW_DOT_TOP_ADJUST = (20 - FLOW_DOT_SIZE) / 2
 
 export default function Experience() {
   const timelineRef = useRef(null)
@@ -149,7 +151,7 @@ export default function Experience() {
       const toY   = dotYInWrap(items[Math.min(seg + 1, items.length - 1)])
       const flowY = fromY + (toY - fromY) * p
 
-      flowDot.style.top = `${flowY}px`
+      flowDot.style.top = `${flowY + FLOW_DOT_TOP_ADJUST}px`
       segment.style.top = `${fromY}px`
       segment.style.height = `${Math.max(0, flowY - fromY)}px`
 
