@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
 const ROLES = [
-  { prefix: 'Full-Stack',  word: 'Developer'   },
-  { prefix: 'AI',          word: 'Enthusiast'  },
+  { prefix: 'Full Stack',  word: 'Developer'   },
+  { prefix: 'AI',          word: 'Builder'     },
   { prefix: 'Tech',        word: 'Explorer'    },
   { prefix: 'Problem',     word: 'Solver'      },
 ]
@@ -68,11 +68,11 @@ export default function Hero() {
             </div>
 
             <p className="hero-tagline">
-              Full-stack developer specializing in AI-powered, data-driven systems for scalable, real-world solutions.
+              Building full stack applications and AI-powered products that turn complex data into meaningful solutions.
             </p>
 
             <p className="hero-tagline-sub">
-              Building thoughtful software, one commit at a time.
+              &ldquo;Curious about what's possible. Serious about making it useful.&rdquo;
             </p>
 
             <div className="d-flex flex-wrap gap-3">

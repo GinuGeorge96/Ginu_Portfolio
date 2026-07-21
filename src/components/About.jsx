@@ -13,25 +13,34 @@ const IC = {
   star:    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
   book:    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
   refresh: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>,
+  message: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+  translate: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>,
+  graduation: <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
 }
 
 const TECH_CHIPS = [
-  { icon: IC.globe,  text: 'Full-Stack Development' },
-  { icon: IC.cpu,    text: 'AI & LLM Integration'   },
-  { icon: IC.search, text: 'Semantic Search & RAG'  },
-  { icon: IC.link,   text: 'REST API Design'        },
-  { icon: IC.db,     text: 'Data Engineering'       },
-  { icon: IC.cloud,  text: 'Cloud & DevOps'         },
-  { icon: IC.chart,  text: 'Data Visualisation'     },
-  { icon: IC.tool,   text: 'System Design & TDD'    },
+  { icon: IC.globe,   text: 'Full-Stack Development'          },
+  { icon: IC.cpu,     text: 'AI & LLM Integration'            },
+  { icon: IC.search,  text: 'RAG & Semantic Search'           },
+  { icon: IC.link,    text: 'Backend & API Development'       },
+  { icon: IC.chart,   text: 'Data Engineering & Visualization' },
+  { icon: IC.cloud,   text: 'Cloud & DevOps'                  },
+  { icon: IC.tool,    text: 'System Design'                   },
+  { icon: IC.refresh, text: 'Test-Driven Development'         },
 ]
 
 const SOFT_CHIPS = [
-  { icon: IC.puzzle,  text: 'Problem Solving'      },
-  { icon: IC.users,   text: 'Collaborative Mindset' },
-  { icon: IC.star,    text: 'Ownership'             },
-  { icon: IC.book,    text: 'Continuous Learning'   },
-  { icon: IC.refresh, text: 'Agile & Scrum'         },
+  { icon: IC.puzzle,  text: 'Problem Solving' },
+  { icon: IC.users,   text: 'Collaboration'   },
+  { icon: IC.message, text: 'Communication'   },
+  { icon: IC.star,    text: 'Ownership'       },
+  { icon: IC.book,    text: 'Adaptability'    },
+  { icon: IC.refresh, text: 'Agile & Scrum'   },
+]
+
+const LANG_CHIPS = [
+  { icon: IC.translate,   text: 'English - Fluent'           },
+  { icon: IC.graduation,  text: 'Svenska - Lär mig aktivt' },
 ]
 
 export default function About() {
@@ -48,19 +57,23 @@ export default function About() {
           <div className="col-lg-7" data-aos="fade-right">
             <div className="about-card">
               <p className="about-p">
-                I am a <strong>Full-Stack Developer</strong> building AI-powered, data-driven web
-                applications that turn complex systems into simple, usable experiences.
+                I&apos;m drawn to the messy, complicated parts of technology and I enjoy making
+                sense of them.
               </p>
               <p className="about-p">
-                My work spans <strong>backend engineering, frontend development</strong>, and
-                intelligent data systems — including APIs, cloud integration, and AI-enabled
-                features that improve how users interact with information.
+                As a Full Stack Developer, I work across backend engineering, frontend development,
+                AI, and data, building applications and systems that turn complexity into simple,
+                intuitive experiences.
               </p>
               <p className="about-p">
-                I enjoy solving complex problems by breaking them into structured, maintainable
-                systems. I'm naturally curious, adaptable in different technical environments, and
-                enjoy working collaboratively to combine <strong>technical depth</strong> with a
-                product-focused mindset.
+                I approach problems by breaking them down, experimenting with ideas, and finding
+                solutions that are both practical and maintainable. I enjoy learning new
+                technologies, adapting to unfamiliar environments, and collaborating with people who
+                bring different perspectives.
+              </p>
+              <p className="about-p">
+                Outside of code, you&apos;ll probably find me solving a Rubik&apos;s cube or getting
+                lost in a good sci-fi concept.
               </p>
             </div>
           </div>
@@ -80,6 +93,16 @@ export default function About() {
             <div className="d-flex flex-wrap">
               {SOFT_CHIPS.map(c => (
                 <div key={c.text} className="chip chip-soft">
+                  {c.icon}{c.text}
+                </div>
+              ))}
+            </div>
+
+            <div className="chip-divider" />
+
+            <div className="d-flex flex-wrap">
+              {LANG_CHIPS.map(c => (
+                <div key={c.text} className="chip chip-lang">
                   {c.icon}{c.text}
                 </div>
               ))}

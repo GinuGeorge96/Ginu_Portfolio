@@ -3,7 +3,7 @@ const PROJECTS = [
     icon:  '📄',
     title: 'DocLens',
     sub:   'AI Document Intelligence',
-    desc:  'AI system that extracts insights from documents using natural language queries and vector-based semantic search.',
+    desc:  'Built an AI-powered document intelligence system that lets users query complex documents using natural language, combining RAG and semantic search to surface relevant information without manually searching through lengthy files.',
     tech:  ['Python', 'OpenAI API', 'RAG', 'Vector DB', 'Node.js', 'React'],
     github: 'https://github.com/GinuGeorge96/DocLens',
     live:   null,
@@ -11,17 +11,26 @@ const PROJECTS = [
   {
     icon:  '⚠️',
     title: 'Hazard Text AI',
-    sub:   null,
-    desc:  'AI-based system for detecting and classifying risky or sensitive text patterns using NLP techniques.',
+    sub:   'AI Text Classification',
+    desc:  'Developed an NLP-based system that automatically identifies and classifies potentially risky or sensitive text, combining transformer-based models and AI-assisted analysis for more efficient text screening.',
     tech:  ['Python', 'DistilBERT', 'NLP', 'OpenAI API', 'FastAPI'],
     github: 'https://github.com/GinuGeorge96/Hazard-AI-Text-Classification',
     live:   null,
   },
   {
+    icon:  '📊',
+    title: 'LCI Data Analysis & Visualization',
+    sub:   'Industrial Sustainability Data Platform',
+    desc:  'Built a full-stack platform that transforms complex Life Cycle Inventory (LCI) and manufacturing data into interactive visualizations, helping users analyze energy consumption and environmental impact to support data-driven sustainable decision-making.',
+    tech:  ['Next.js', 'FastAPI', 'PostgreSQL', 'MQTT', 'Recharts', 'Docker', 'Python'],
+    github: null,
+    live:   null,
+  },
+  {
     icon:  '🏡',
     title: 'HemKärlek',
-    sub:   null,
-    desc:  'Web platform concept for managing home-related services and daily household activities efficiently.',
+    sub:   'Home Services Platform',
+    desc:  'Built a full-stack platform designed to simplify how users discover, manage, and pay for home-related services, integrating authentication, online payments, and cloud deployment into a complete user experience.',
     tech:  ['React', 'Node.js', 'MongoDB', 'Stripe', 'AWS', 'JWT'],
     github: null,
     live:   'https://xn--hemkrlek-3za.com/',
@@ -56,8 +65,10 @@ export default function Projects() {
               data-aos-delay={i * 90}
             >
               <div className="proj-card">
-                <div className="proj-icon">{p.icon}</div>
-                <div className="proj-title">{p.title}</div>
+                <div className="proj-header">
+                  <div className="proj-icon">{p.icon}</div>
+                  <div className="proj-title">{p.title}</div>
+                </div>
                 {p.sub && <div className="proj-sub">{p.sub}</div>}
                 <p className="proj-desc">{p.desc}</p>
                 <div className="tags">
