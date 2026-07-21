@@ -17,7 +17,7 @@ export default function StarBackground() {
     window.addEventListener('resize', resize)
 
     // Twinkling stars
-    const stars = Array.from({ length: 380 }, () => ({
+    const stars = Array.from({ length: 160 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       r: Math.random() * 1.6 + 0.2,

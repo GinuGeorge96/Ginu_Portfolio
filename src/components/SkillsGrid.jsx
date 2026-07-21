@@ -5,8 +5,11 @@ import {
   SiDocker, SiGithubactions, SiGit, SiGooglecloud, SiVercel,
   SiJira, SiFigma, SiPostman, SiOpenai, SiSharp, SiTypescript,
 } from 'react-icons/si'
-import { FaDatabase, FaTools, FaBrain, FaAws, FaCss3, FaLinux, FaSync, FaLock, FaVial, FaCheckCircle, FaLink } from 'react-icons/fa'
-import { useState } from 'react'
+import {
+  FaDatabase, FaTools, FaBrain, FaAws, FaCss3, FaLinux, FaSync,
+  FaLock, FaVial, FaCheckCircle, FaLink, FaChevronRight, FaChevronLeft,
+} from 'react-icons/fa'
+import { useEffect, useRef, useState } from 'react'
 
 const SKILLS = [
   // Languages
@@ -64,15 +67,65 @@ const SKILLS = [
 
 const TABS = ['All', 'Languages', 'Frontend', 'Backend & APIs', 'AI & Data', 'Databases', 'Cloud & DevOps', 'Tools', 'Testing & Quality']
 
+const ROWS = 4
+const CARD_MIN = 160
+const GRID_GAP = 16
+
+function SkillCard({ skill, showCategory }) {
+  const Icon = skill.icon
+  return (
+    <div className="sg-card">
+      {showCategory && <span className="sg-cat-badge">{skill.category}</span>}
+      <div className="sg-icon" style={{ color: skill.color }}>
+        <Icon size={38} />
+      </div>
+      <div className="sg-skill-name">{skill.name}</div>
+    </div>
+  )
+}
 
 export default function SkillsGrid() {
   const [active, setActive] = useState('All')
+  const [page, setPage] = useState(0)
+  const [cols, setCols] = useState(5)
+  const viewportRef = useRef(null)
 
   const filtered = active === 'All' ? SKILLS : SKILLS.filter(s => s.category === active)
+  const showCategory = active === 'All'
+  const perPage = cols * ROWS
+  const pageCount = Math.ceil(filtered.length / perPage)
+  const useCarousel = active === 'All' && pageCount > 1
+
+  useEffect(() => {
+    setPage(0)
+  }, [active])
+
+  useEffect(() => {
+    setPage(p => Math.min(p, Math.max(0, pageCount - 1)))
+  }, [pageCount])
+
+  useEffect(() => {
+    const el = viewportRef.current
+    if (!el) return
+
+    const measure = () => {
+      const width = el.clientWidth
+      const nextCols = Math.max(1, Math.floor((width + GRID_GAP) / (CARD_MIN + GRID_GAP)))
+      setCols(nextCols)
+    }
+
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [useCarousel])
+
+  const pages = Array.from({ length: pageCount }, (_, i) =>
+    filtered.slice(i * perPage, (i + 1) * perPage)
+  )
 
   return (
     <div className="sg-grid-wrap">
-      {/* Filter tabs */}
       <div className="sg-tabs">
         {TABS.map(t => (
           <button
@@ -85,21 +138,74 @@ export default function SkillsGrid() {
         ))}
       </div>
 
-      {/* Cards */}
-      <div className="sg-cards">
-        {filtered.map(s => {
-          const Icon = s.icon
-          return (
-            <div key={s.name} className="sg-card">
-              {active === 'All' && <span className="sg-cat-badge">{s.category}</span>}
-              <div className="sg-icon" style={{ color: s.color }}>
-                <Icon size={38} />
-              </div>
-              <div className="sg-skill-name">{s.name}</div>
+      {useCarousel ? (
+        <div className="sg-carousel">
+          <div className="sg-carousel-nav sg-carousel-nav-left">
+            {page > 0 ? (
+              <button
+                type="button"
+                className="sg-carousel-btn"
+                onClick={() => setPage(p => p - 1)}
+                aria-label="Previous skills"
+              >
+                <FaChevronLeft size={16} />
+              </button>
+            ) : (
+              <span className="sg-carousel-spacer" aria-hidden="true" />
+            )}
+          </div>
+
+          <div className="sg-carousel-viewport" ref={viewportRef}>
+            <div
+              className="sg-carousel-track"
+              style={{ transform: `translateX(-${page * 100}%)` }}
+            >
+              {pages.map((chunk, i) => (
+                <div key={i} className="sg-cards sg-cards-page">
+                  {chunk.map(s => (
+                    <SkillCard key={s.name} skill={s} showCategory={showCategory} />
+                  ))}
+                </div>
+              ))}
             </div>
-          )
-        })}
-      </div>
+          </div>
+
+          <div className="sg-carousel-nav sg-carousel-nav-right">
+            {page < pageCount - 1 ? (
+              <button
+                type="button"
+                className="sg-carousel-btn sg-carousel-btn-next"
+                onClick={() => setPage(p => p + 1)}
+                aria-label="Next skills"
+              >
+                <FaChevronRight size={16} />
+              </button>
+            ) : (
+              <span className="sg-carousel-spacer" aria-hidden="true" />
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="sg-cards" ref={viewportRef}>
+          {filtered.map(s => (
+            <SkillCard key={s.name} skill={s} showCategory={showCategory} />
+          ))}
+        </div>
+      )}
+
+      {useCarousel && (
+        <div className="sg-carousel-dots">
+          {pages.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={`sg-carousel-dot${page === i ? ' active' : ''}`}
+              onClick={() => setPage(i)}
+              aria-label={`Go to skills page ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

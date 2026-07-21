@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 
 export default function Contact() {
   const sweepRef = useRef(null)
-  const [form, setForm]   = useState({ name: '', email: '', message: '' })
-  const [sent, setSent]   = useState(false)
+  const [form, setForm]     = useState({ name: '', email: '', message: '' })
+  const [sent, setSent]     = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError]   = useState('')
 
   /* ── Sweep canvas ── */
   useEffect(() => {
@@ -79,9 +81,47 @@ export default function Contact() {
   const handleChange = e =>
     setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setSent(true)
+
+    const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+    if (!accessKey) {
+      setError('Contact form is not configured yet. Please email ginugeorge96@gmail.com directly.')
+      return
+    }
+
+    setSending(true)
+    setError('')
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          subject: `Portfolio contact from ${form.name}`,
+          from_name: 'Ginu George Portfolio',
+        }),
+      })
+
+      const data = await res.json()
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Something went wrong. Please try again.')
+      }
+
+      setSent(true)
+      setForm({ name: '', email: '', message: '' })
+    } catch (err) {
+      setError(err.message || 'Failed to send message. Please try again or email directly.')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -91,7 +131,7 @@ export default function Contact() {
 
           <div className="contact-grid">
             {/* Left — radar */}
-            <div className="contact-left" data-aos="fade-right">
+            <div className="contact-left">
               <div className="radar-outer">
                 <div className="r-cross h" />
                 <div className="r-cross v" />
@@ -145,7 +185,7 @@ export default function Contact() {
             </div>
 
             {/* Right — form */}
-            <div className="contact-right" data-aos="fade-left">
+            <div className="contact-right">
               <h2 className="contact-heading">Let's<br /><span>Connect.</span></h2>
               <p className="contact-desc">
                 Transmit a message. I respond to all signals within 24 hours.
@@ -157,6 +197,7 @@ export default function Contact() {
                 </div>
               ) : (
                 <form className="contact-form" onSubmit={handleSubmit}>
+                  {error && <div className="contact-error">{error}</div>}
                   <div className="cf-field">
                     <label className="cf-label">IDENTIFIER (NAME)</label>
                     <input
@@ -193,8 +234,8 @@ export default function Contact() {
                       required
                     />
                   </div>
-                  <button className="cf-btn" type="submit">
-                    SEND SIGNAL &nbsp;→
+                  <button className="cf-btn" type="submit" disabled={sending}>
+                    {sending ? 'TRANSMITTING…' : 'SEND SIGNAL \u00a0→'}
                   </button>
                 </form>
               )}

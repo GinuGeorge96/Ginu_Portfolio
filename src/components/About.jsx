@@ -80,7 +80,7 @@ export default function About() {
 
           {/* Chips */}
           <div className="col-lg-5" data-aos="fade-left">
-            <div className="d-flex flex-wrap">
+            <div className="chip-grid">
               {TECH_CHIPS.map(c => (
                 <div key={c.text} className="chip">
                   {c.icon}{c.text}
@@ -90,7 +90,7 @@ export default function About() {
 
             <div className="chip-divider" />
 
-            <div className="d-flex flex-wrap">
+            <div className="chip-grid">
               {SOFT_CHIPS.map(c => (
                 <div key={c.text} className="chip chip-soft">
                   {c.icon}{c.text}
@@ -100,7 +100,7 @@ export default function About() {
 
             <div className="chip-divider" />
 
-            <div className="d-flex flex-wrap">
+            <div className="chip-grid">
               {LANG_CHIPS.map(c => (
                 <div key={c.text} className="chip chip-lang">
                   {c.icon}{c.text}

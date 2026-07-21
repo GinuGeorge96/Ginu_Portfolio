@@ -35,15 +35,6 @@ const PROJECTS = [
     github: null,
     live:   'https://xn--hemkrlek-3za.com/',
   },
-  {
-    icon:  '🌿',
-    title: 'Olivhus',
-    sub:   null,
-    desc:  'Sustainable living and eco-friendly housing platform focused on structured information delivery.',
-    tech:  ['Next.js', 'Tailwind CSS', 'Node.js'],
-    github: null,
-    live:   'https://www.olivhus.se/',
-  },
 ]
 
 export default function Projects() {

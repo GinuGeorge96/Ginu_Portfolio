@@ -1,3 +1,6 @@
+import { useEffect, useRef } from 'react'
+import AOS from 'aos'
+
 const JOBS = [
   {
     company: 'Pink Bytes',
@@ -65,7 +68,138 @@ const JOBS = [
   },
 ]
 
+const DOT_OFFSET = 10
+
 export default function Experience() {
+  const timelineRef = useRef(null)
+  const flowDotRef  = useRef(null)
+  const segmentRef  = useRef(null)
+  const lastHitRef  = useRef(-1)
+
+  useEffect(() => {
+    const section  = document.getElementById('experience')
+    const timeline = timelineRef.current
+    const flowDot  = flowDotRef.current
+    const segment  = segmentRef.current
+    if (!section || !timeline || !flowDot || !segment) return
+
+    const TRIGGER_RATIO = 0.45
+    let rafId = 0
+
+    const dotYInWrap = (item) => {
+      const wrapTop = timeline.getBoundingClientRect().top
+      return item.getBoundingClientRect().top - wrapTop + DOT_OFFSET
+    }
+
+    const dotViewportY = (item) => item.getBoundingClientRect().top + DOT_OFFSET
+
+    const triggerHit = (index) => {
+      if (index === lastHitRef.current) return
+      lastHitRef.current = index
+      const dots = timeline.querySelectorAll('.tl-dot')
+      const target = dots[index]
+      if (!target) return
+      target.classList.remove('tl-dot-hit')
+      void target.offsetWidth
+      target.classList.add('tl-dot-hit')
+    }
+
+    const update = () => {
+      const items = [...timeline.querySelectorAll('.tl-item')]
+      if (items.length < 2) return
+
+      const sectionRect = section.getBoundingClientRect()
+      const vh = window.innerHeight
+      const inView = sectionRect.bottom > 0 && sectionRect.top < vh
+
+      if (!inView) {
+        flowDot.classList.remove('is-flowing')
+        segment.style.height = '0px'
+        return
+      }
+
+      const trigger = vh * TRIGGER_RATIO
+      let seg = 0
+      let p = 0
+
+      if (dotViewportY(items[0]) > trigger) {
+        seg = 0
+        p = 0
+      } else {
+        for (let i = 0; i < items.length - 1; i++) {
+          const y0 = dotViewportY(items[i])
+          const y1 = dotViewportY(items[i + 1])
+
+          if (y0 <= trigger && y1 > trigger) {
+            seg = i
+            p = (trigger - y0) / (y1 - y0)
+            break
+          }
+
+          if (y1 <= trigger) {
+            seg = i
+            p = 1
+          }
+        }
+      }
+
+      p = Math.min(1, Math.max(0, p))
+
+      const fromY = dotYInWrap(items[seg])
+      const toY   = dotYInWrap(items[Math.min(seg + 1, items.length - 1)])
+      const flowY = fromY + (toY - fromY) * p
+
+      flowDot.style.top = `${flowY}px`
+      segment.style.top = `${fromY}px`
+      segment.style.height = `${Math.max(0, flowY - fromY)}px`
+
+      const moving = p > 0.01 && p < 0.99
+      flowDot.classList.toggle('is-flowing', moving)
+
+      if (p >= 0.99 && seg < items.length - 1) {
+        triggerHit(seg + 1)
+      }
+
+      if (p < 0.02) {
+        lastHitRef.current = -1
+      }
+    }
+
+    const tick = () => {
+      update()
+      const sectionRect = section.getBoundingClientRect()
+      const inView = sectionRect.bottom > 0 && sectionRect.top < window.innerHeight
+      if (inView) {
+        rafId = requestAnimationFrame(tick)
+      } else {
+        rafId = 0
+      }
+    }
+
+    const kick = () => {
+      if (rafId) return
+      rafId = requestAnimationFrame(tick)
+    }
+
+    kick()
+    window.addEventListener('scroll', kick, { passive: true })
+    window.addEventListener('resize', kick)
+
+    const t1 = setTimeout(kick, 400)
+    const t2 = setTimeout(() => {
+      AOS.refresh()
+      kick()
+    }, 1200)
+
+    return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
+      if (rafId) cancelAnimationFrame(rafId)
+      window.removeEventListener('scroll', kick)
+      window.removeEventListener('resize', kick)
+    }
+  }, [])
+
   return (
     <section id="experience">
       <div className="container">
@@ -75,7 +209,11 @@ export default function Experience() {
           <p className="section-sub">My professional journey across industries and countries</p>
         </div>
 
-        <ul className="timeline">
+        <div className="timeline-wrap" ref={timelineRef}>
+          <div className="tl-segment-progress" ref={segmentRef} aria-hidden="true" />
+          <div className="tl-flow-dot" ref={flowDotRef} aria-hidden="true" />
+
+          <ul className="timeline">
           {JOBS.map((job, i) => (
             <li
               key={i}
@@ -99,7 +237,8 @@ export default function Experience() {
               </div>
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
 
       </div>
     </section>
