@@ -16,6 +16,7 @@ const SKILLS = [
   { name: 'Python',          icon: SiPython,           color: '#3776AB', category: 'Languages',  pct: 90 },
   { name: 'JavaScript',      icon: SiJavascript,       color: '#F7DF1E', category: 'Languages',  pct: 85 },
   { name: 'TypeScript',      icon: SiTypescript,       color: '#3178C6', category: 'Languages',  pct: 80 },
+  { name: 'C#',              icon: SiSharp,            color: '#239120', category: 'Languages',  pct: 65 },
   // Frontend
   { name: 'React',           icon: SiReact,            color: '#61DAFB', category: 'Frontend',   pct: 90 },
   { name: 'Next.js',         icon: SiNextdotjs,        color: '#ffffff', category: 'Frontend',   pct: 80 },
@@ -27,7 +28,6 @@ const SKILLS = [
   // Backend & APIs
   { name: 'FastAPI',                         icon: SiFastapi,          color: '#009688', category: 'Backend & APIs', pct: 85 },
   { name: 'Node.js',                         icon: SiNodedotjs,        color: '#339933', category: 'Backend & APIs', pct: 75 },
-  { name: 'C# / .NET',                       icon: SiSharp,            color: '#239120', category: 'Backend & APIs', pct: 65 },
   { name: 'REST APIs',                       icon: FaTools,            color: '#60a5fa', category: 'Backend & APIs', pct: 90 },
   { name: 'OpenAPI',                         icon: FaDatabase,         color: '#85EA2D', category: 'Backend & APIs', pct: 80 },
   { name: 'Asynchronous Programming',        icon: FaSync,             color: '#34d399', category: 'Backend & APIs', pct: 80 },

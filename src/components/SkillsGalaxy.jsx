@@ -6,7 +6,7 @@ const CATS = [
   {
     label: 'Languages',
     color: '#eab308',
-    skills: ['Python', 'JavaScript', 'TypeScript'],
+    skills: ['Python', 'JavaScript', 'TypeScript', 'C#'],
     orbitF: 0.10, speed: -0.00042,
   },
   {
@@ -18,7 +18,7 @@ const CATS = [
   {
     label: 'Backend & APIs',
     color: '#34d399',
-    skills: ['FastAPI', 'Node.js', 'C# / .NET', 'REST APIs', 'OpenAPI'],
+    skills: ['FastAPI', 'Node.js', 'REST APIs', 'OpenAPI'],
     orbitF: 0.225, speed: -0.00030,
   },
   {
